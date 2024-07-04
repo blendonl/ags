@@ -8,7 +8,10 @@ export const SeparatorDot = () =>
     revealChild: false,
     attribute: {
       count: SystemTray.items.length,
-      update: (self, diff) => {
+      update: (
+        self: { attribute: { count: number }; revealChild: boolean },
+        diff: number,
+      ) => {
         self.attribute.count += diff;
         self.revealChild = self.attribute.count > 0;
       },
@@ -17,8 +20,16 @@ export const SeparatorDot = () =>
       vpack: "center",
       className: "separator-circle",
     }),
-    setup: (self) =>
+    setup: (self: any) =>
       self
-        .hook(SystemTray, (self) => self.attribute.update(self, 1), "added")
-        .hook(SystemTray, (self) => self.attribute.update(self, -1), "removed"),
+        .hook(
+          SystemTray,
+          (self: any) => self.attribute.update(self, 1),
+          "added",
+        )
+        .hook(
+          SystemTray,
+          (self: any) => self.attribute.update(self, -1),
+          "removed",
+        ),
   });

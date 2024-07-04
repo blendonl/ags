@@ -10,11 +10,14 @@ export const BarClock = () =>
         className: "bar-time",
         label: GLib.DateTime.new_now_local().format(userOptions.time.format),
         setup: (self) =>
-          self.poll(userOptions.time.interval, (label) => {
-            label.label = GLib.DateTime.new_now_local().format(
-              userOptions.time.format,
-            );
-          }),
+          self.poll(
+            userOptions.time.interval,
+            (label: { label: string | null }) => {
+              label.label = GLib.DateTime.new_now_local().format(
+                userOptions.time.format,
+              );
+            },
+          ),
       }),
       Widget.Label({
         className: "txt-norm txt-onLayer1",
@@ -26,11 +29,14 @@ export const BarClock = () =>
           userOptions.time.dateFormatLong,
         ),
         setup: (self) =>
-          self.poll(userOptions.time.dateInterval, (label) => {
-            label.label = GLib.DateTime.new_now_local().format(
-              userOptions.time.dateFormatLong,
-            );
-          }),
+          self.poll(
+            userOptions.time.dateInterval,
+            (label: { label: string | null }) => {
+              label.label = GLib.DateTime.new_now_local().format(
+                userOptions.time.dateFormatLong,
+              );
+            },
+          ),
       }),
     ],
   });
