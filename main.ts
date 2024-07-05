@@ -1,29 +1,21 @@
 // Import
 import Gdk from "gi://Gdk";
-import GLib from "gi://GLib";
 import App from "resource:///com/github/Aylur/ags/app.js";
-import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
-// Stuff
 import userOptions from "./modules/.configuration/user_options.js";
 import {
   firstRunWelcome,
   startBatteryWarningService,
 } from "./services/messages.js";
 import { startAutoDarkModeService } from "./services/darkmode.js";
-// Widgets
-import Cheatsheet from "./modules/cheatsheet/main.js";
-import DesktopBackground from "./modules/desktopbackground/main.js";
 import Dock from "./modules/dock/main.js";
-import Corner from "./modules/screencorners/main.js";
-import Crosshair from "./modules/crosshair/main.js";
 import Indicator from "./modules/indicators/main.js";
-import Osk from "./modules/onscreenkeyboard/main.js";
 import Overview from "./modules/overview/main.js";
 import Session from "./modules/session/main.js";
 import SideLeft from "./modules/sideleft/main.js";
 import SideRight from "./modules/sideright/main.js";
 import { COMPILED_STYLE_DIR } from "./init.js";
 import { BarWidget } from "modules/bar/bar.widget.js";
+import { WallpaperModuleWidget } from "modules/desktopbackground/wallpaper-module.widget.js";
 
 const range = (length, start = 1) =>
   Array.from({ length }, (_, i) => i + start);
@@ -43,14 +35,11 @@ firstRunWelcome().catch(print);
 startBatteryWarningService().catch(print);
 
 const Windows = () => [
-  forMonitors(DesktopBackground),
-  forMonitors(Crosshair),
+  forMonitors(WallpaperModuleWidget),
   Overview(),
   forMonitors(Indicator),
-  forMonitors(Cheatsheet),
   SideLeft(),
   SideRight(),
-  forMonitors(Osk),
   forMonitors(Session),
   ...(userOptions.dock.enabled ? [forMonitors(Dock)] : []),
 ];
