@@ -7,8 +7,6 @@ import {
   startBatteryWarningService,
 } from "./services/messages.js";
 import { startAutoDarkModeService } from "./services/darkmode.js";
-import Dock from "./modules/dock/main.js";
-import Indicator from "./modules/indicators/main.js";
 import Overview from "./modules/overview/main.js";
 import Session from "./modules/session/main.js";
 import SideLeft from "./modules/sideleft/main.js";
@@ -16,6 +14,7 @@ import SideRight from "./modules/sideright/main.js";
 import { COMPILED_STYLE_DIR } from "./init.js";
 import { BarWidget } from "modules/bar/bar.widget.js";
 import { WallpaperModuleWidget } from "modules/desktopbackground/wallpaper-module.widget.js";
+import { IndicatorsModuleWidget } from "modules/indicators/indicators.module.widget.js";
 
 const range = (length, start = 1) =>
   Array.from({ length }, (_, i) => i + start);
@@ -37,11 +36,12 @@ startBatteryWarningService().catch(print);
 const Windows = () => [
   forMonitors(WallpaperModuleWidget),
   Overview(),
-  forMonitors(Indicator),
+  forMonitors(IndicatorsModuleWidget),
   SideLeft(),
   SideRight(),
   forMonitors(Session),
-  ...(userOptions.dock.enabled ? [forMonitors(Dock)] : []),
+
+  ...(userOptions.dock.enabled ? [] : []),
 ];
 
 const CLOSE_ANIM_TIME = 210; // Longer than actual anim time to make sure widgets animate fully
