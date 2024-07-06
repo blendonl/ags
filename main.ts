@@ -7,7 +7,7 @@ import {
   startBatteryWarningService,
 } from "./services/messages.js";
 import { startAutoDarkModeService } from "./services/darkmode.js";
-import Overview from "./modules/overview/main.js";
+import { OverviewWidget } from "./modules/overview/overview.widget";
 import Session from "./modules/session/main.js";
 import SideLeft from "./modules/sideleft/main.js";
 import SideRight from "./modules/sideright/main.js";
@@ -35,7 +35,7 @@ startBatteryWarningService().catch(print);
 
 const Windows = () => [
   forMonitors(WallpaperModuleWidget),
-  Overview(),
+  OverviewWidget(),
   forMonitors(IndicatorsModuleWidget),
   SideLeft(),
   SideRight(),

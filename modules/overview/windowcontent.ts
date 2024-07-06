@@ -5,7 +5,11 @@ import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
 
 import Applications from "resource:///com/github/Aylur/ags/service/applications.js";
 const { exec } = Utils;
-import { hasUnterminatedBackslash, couldBeMath, ls } from "./miscfunctions.js";
+import {
+  hasUnterminatedBackslash,
+  couldBeMath,
+  ls,
+} from "./miscfunctions.service";
 import {
   CalculationResultButton,
   CustomCommandButton,
@@ -15,7 +19,7 @@ import {
   SearchButton,
   AiButton,
   NoResultButton,
-} from "./searchbuttons.js";
+} from "./searchbuttons";
 import { checkKeybind } from "../.widgetutils/keybind.js";
 
 const MAX_RESULTS = 10;
