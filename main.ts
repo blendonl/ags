@@ -1,6 +1,7 @@
 // Import
 import Gdk from "gi://Gdk";
 import App from "resource:///com/github/Aylur/ags/app.js";
+import Launcher from "launcher/Launcher.js";
 import userOptions from "./modules/.configuration/user_options.js";
 import {
   firstRunWelcome,
@@ -8,7 +9,7 @@ import {
 } from "./services/messages.js";
 import { startAutoDarkModeService } from "./services/darkmode.js";
 import { OverviewWidget } from "./modules/overview/overview.widget";
-import Session from "./modules/session/main.js";
+import { SessionModule } from "./modules/session/session-module.widget";
 import SideLeft from "./modules/sideleft/main.js";
 import SideRight from "./modules/sideright/main.js";
 import { COMPILED_STYLE_DIR } from "./init.js";
@@ -36,10 +37,11 @@ startBatteryWarningService().catch(print);
 const Windows = () => [
   forMonitors(WallpaperModuleWidget),
   OverviewWidget(),
+  Launcher(),
   forMonitors(IndicatorsModuleWidget),
   SideLeft(),
   SideRight(),
-  forMonitors(Session),
+  forMonitors(SessionModule),
 
   ...(userOptions.dock.enabled ? [] : []),
 ];

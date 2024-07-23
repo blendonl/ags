@@ -6,17 +6,27 @@ import { BarIndicatorsWidget } from "./normal/bar.indicators.widget.js";
 import { BatteryModule } from "./normal/bar.battery.widget.js";
 import { BarClock } from "./normal/bar.clock.widget.js";
 import { BarTemperatureWidget } from "./normal/bar.temperature.widget.js";
+import { BarGroupWidget } from "./common/bar.group.widget.js";
+import { SeparatorDot } from "./common/bar.separator-dot.widget.js";
 
 export const BarWidget = async (monitor = 0) => {
   const normalBarContent = Widget.CenterBox({
     className: "bar-bg",
     startWidget: Widget.Box({
       className: "spacing-h-4",
-      children: [BatteryModule(), BarSystemResourcesWidget()],
+      children: [
+        BarGroupWidget({
+          child: BatteryModule(),
+        }),
+        BarSystemResourcesWidget(),
+      ],
     }),
     centerWidget: Widget.Box({
       className: "spacing-h-4",
-      children: [BarTemperatureWidget(), BarClock()],
+      children: [
+        BarGroupWidget({ child: BarTemperatureWidget() }),
+        BarGroupWidget({ child: BarClock() }),
+      ],
     }),
     endWidget: BarIndicatorsWidget(),
   });

@@ -80,11 +80,11 @@ apply_term() {
 
     sed -i "s/\$alpha/$term_alpha/g" "$CACHE_DIR/user/generated/terminal/sequences.txt"
 
-    for file in /dev/pts/*; do
-      if [[ $file =~ ^/dev/pts/[0-9]+$ ]]; then
-        cat "$CACHE_DIR"/user/generated/terminal/sequences.txt > "$file"
-      fi
-    done
+    # for file in /dev/pts/*; do
+    #   if [[ $file =~ ^/dev/pts/[0-9]+$ ]]; then
+    #     cat "$CACHE_DIR"/user/generated/terminal/sequences.txt > "$file"
+    #   fi
+    # done
 }
 
 apply_hyprland() {

@@ -1,15 +1,29 @@
-import Widget, {
-  Box,
-  Label,
-  Overlay,
-  Revealer,
-  Stack,
-} from "resource:///com/github/Aylur/ags/widget.js";
+import Widget from "resource:///com/github/Aylur/ags/widget.js";
 import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
-import { BarGroupWidget } from "../common/bar.group.widget";
-import { AnimatedCircProg } from "modules/.commonwidgets/cairo_circularprogress";
-import { MaterialIcon } from "modules/.commonwidgets/materialicon";
-import { Battery } from "resource:///com/github/Aylur/ags/service/battery.js";
+const { Box, Label, Overlay, Revealer, Stack } = Widget;
+const { GLib } = imports.gi;
+import Battery from "resource:///com/github/Aylur/ags/service/battery.js";
+import { MaterialIcon } from "../../.commonwidgets/materialicon.js";
+import { AnimatedCircProg } from "../../.commonwidgets/cairo_circularprogress.js";
+
+const WEATHER_CACHE_FOLDER = `${GLib.get_user_cache_dir()}/ags/weather`;
+Utils.exec(`mkdir -p ${WEATHER_CACHE_FOLDER}`);
+
+export const BatteryModule = () =>
+  Stack({
+    transition: "slide_up_down",
+    transitionDuration: userOptions.animations.durationLarge,
+    children: {
+      laptop: Box({
+        className: "spacing-h-4",
+        children: [BarBattery()],
+      }),
+    },
+    setup: (stack) =>
+      Utils.timeout(10, () => {
+        stack.shown = "laptop";
+      }),
+  });
 
 const BatBatteryProgress = () => {
   const _updateProgress = (circprog) => {
@@ -26,28 +40,21 @@ const BatBatteryProgress = () => {
     className: "bar-batt-circprog",
     vpack: "center",
     hpack: "center",
-    extraSetup: (self) => self.hook(Battery, _updateProgress),
   });
 };
 
-export const BatteryModule = () =>
-  Box({
-    className: "spacing-h-4",
-    children: [BarGroupWidget({ child: BarBattery() })],
-  });
-
-const BarBattery = () =>
+export const BarBattery = () =>
   Box({
     className: "spacing-h-4 bar-batt-txt",
     children: [
       Revealer({
         transitionDuration: userOptions.animations.durationSmall,
-        revealChild: false,
+        revealChild: true,
         transition: "slide_right",
         child: MaterialIcon("bolt", "norm", { tooltipText: "Charging" }),
         setup: (self) =>
           self.hook(Battery, (revealer) => {
-            self.revealChild = Battery.charging;
+            self.reveal_child = Battery.charging;
           }),
       }),
       Label({
